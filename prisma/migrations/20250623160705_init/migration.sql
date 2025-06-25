@@ -1,0 +1,2 @@
+-- AlterEnum
+ALTER TYPE "LEAVE_APPROVAL" ADD VALUE 'Canceled';
