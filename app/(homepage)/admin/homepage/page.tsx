@@ -51,7 +51,7 @@ const Page = async () => {
             h="h-[150px]"
           />
           <Card
-            title={"total HRs"}
+            title={"total Managers"}
             value={man_users}
             w="w-[200px]"
             h="h-[150px]"

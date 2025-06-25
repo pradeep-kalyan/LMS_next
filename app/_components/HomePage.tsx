@@ -30,14 +30,12 @@ const HomePage = async ({ db_user, leave_balances }) => {
               : "Unknown"
           }
         />
-        <Card title={"Manager"} value={db_user?.manager_id || "Not Assigned"} />
-      </div>
-      <div>
-        <h2>Leave Information</h2>
-        <Card
-          title={"Total Leaves"}
-          value={leave_balances.map((LB: leave_balance) => LB.yearly)}
-        />
+        {db_user?.role_id === 4 && (
+          <Card
+            title={"Manager"}
+            value={db_user?.manager_id || "Not Assigned"}
+          />
+        )}
       </div>
     </div>
   );

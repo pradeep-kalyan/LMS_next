@@ -1,26 +1,35 @@
-"use server";
 import React from "react";
 import prisma from "@/lib/db";
 import Request from "@/app/_components/Request";
-import CancelButton from "@/app/_components/cancelLeave";
 import { get_current_user } from "@/app/actions/auth/get_current_user";
+import { updateLeaveStatus } from "@/app/actions/leaves/handleLeave";
+import { revalidatePath } from "next/cache";
 
-const LRForm = async () => {
+const LR_Form = async () => {
   const leave_types = await prisma.leave_types.findMany();
   const user = await get_current_user();
+
   const leave_requests = await prisma.leave_request.findMany({
     orderBy: { applied_date: "desc" },
-    where: { user_id: (user as { id: string }).id },
+    include: { status: true },
+    where: { user_id: user?.id as string },
   });
+
+  const leave_balance = await prisma.leave_balance.findMany({
+    where: { user_id: user?.id as string },
+  });
+
   const statusColors = {
-    5: "bg-green-100 text-green-800",
-    2: "bg-green-100 text-green-800",
-    1: "bg-green-100 text-green-800",
-    3: "bg-green-100 text-green-800",
-    4: "bg-red-100 text-red-800",
-    7: "bg-red-100 text-red-800",
-    6: "bg-yellow-100 text-yellow-800",
+    APPROVED_BY_MANAGER: "bg-green-100 text-green-800",
+    APPROVED: "bg-green-100 text-green-800",
+    APPROVED_BY_HR: "bg-green-100 text-green-800",
+    APPROVED_BY_ADMIN: "bg-green-100 text-green-800",
+    AUTO_APPROVED: "bg-green-100 text-green-800",
+    REJECTED: "bg-red-100 text-red-800",
+    CANCELLED: "bg-red-100 text-red-800",
+    PENDING: "bg-yellow-100 text-yellow-800",
   };
+
   return (
     <div className="w-full min-h-screen p-4">
       <div className="max-w-6xl mx-auto">
@@ -28,7 +37,7 @@ const LRForm = async () => {
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">
             Create Leave Request
           </h2>
-          <Request leave_type={leave_types} />
+          <Request leave_type={leave_types} leave_balance={leave_balance} />
 
           <div className="mt-8 w-full">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">
@@ -88,15 +97,28 @@ const LRForm = async () => {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span
                           className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                            statusColors[leave.status_id] ||
+                            statusColors[leave.status?.name] ||
                             "bg-yellow-100 text-yellow-800"
                           }`}
                         >
-                          {leave.status_id || "PENDING"}
+                          {leave.status?.name || "PENDING"}
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <CancelButton LRid={leave.cus_id} />
+                        <form
+                          action={async () => {
+                            "use server";
+                            await updateLeaveStatus(leave.cus_id, 6);
+                            revalidatePath("/employee/homepage/request");
+                          }}
+                        >
+                          <button
+                            type="submit"
+                            className="text-red-500 text-sm font-semibold text-center hover:scale-105 cursor-pointer"
+                          >
+                            Cancel
+                          </button>
+                        </form>
                       </td>
                     </tr>
                   ))}
@@ -110,4 +132,4 @@ const LRForm = async () => {
   );
 };
 
-export default LRForm;
+export default LR_Form;

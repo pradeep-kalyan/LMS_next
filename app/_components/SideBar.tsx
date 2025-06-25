@@ -33,7 +33,7 @@ const roleLinks: Record<string, { name: string; path: string }[]> = {
   employee: [
     { name: "Home", path: "/employee/homepage" },
     { name: "Request Leave", path: "/employee/homepage/request" },
-    { name: "View Status", path: "/employee/homepage/status" },
+    { name: "Leave Information", path: "/employee/homepage/view" },
   ],
 };
 

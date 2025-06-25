@@ -103,7 +103,10 @@ export const LEAVE_APPROVAL: {
   AUTO_APPROVED: 'AUTO_APPROVED',
   PENDING: 'PENDING',
   REJECTED: 'REJECTED',
-  CANCELLED: 'CANCELLED'
+  CANCELLED: 'CANCELLED',
+  PENDING_BY_MANAGER: 'PENDING_BY_MANAGER',
+  PENDING_BY_HR: 'PENDING_BY_HR',
+  PENDING_BY_ADMIN: 'PENDING_BY_ADMIN'
 };
 
 export type LEAVE_APPROVAL = (typeof LEAVE_APPROVAL)[keyof typeof LEAVE_APPROVAL]
@@ -15640,7 +15643,7 @@ export namespace Prisma {
     last_name: string
     email: string
     password: string
-    joined_date: Date | string
+    joined_date?: Date | string
     is_Active: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -15660,7 +15663,7 @@ export namespace Prisma {
     last_name: string
     email: string
     password: string
-    joined_date: Date | string
+    joined_date?: Date | string
     is_Active: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -15720,7 +15723,7 @@ export namespace Prisma {
     last_name: string
     email: string
     password: string
-    joined_date: Date | string
+    joined_date?: Date | string
     is_Active: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -17511,7 +17514,7 @@ export namespace Prisma {
     last_name: string
     email: string
     password: string
-    joined_date: Date | string
+    joined_date?: Date | string
     is_Active: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -17530,7 +17533,7 @@ export namespace Prisma {
     last_name: string
     email: string
     password: string
-    joined_date: Date | string
+    joined_date?: Date | string
     is_Active: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -17912,7 +17915,7 @@ export namespace Prisma {
     last_name: string
     email: string
     password: string
-    joined_date: Date | string
+    joined_date?: Date | string
     is_Active: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -17931,7 +17934,7 @@ export namespace Prisma {
     last_name: string
     email: string
     password: string
-    joined_date: Date | string
+    joined_date?: Date | string
     is_Active: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -18090,7 +18093,7 @@ export namespace Prisma {
     last_name: string
     email: string
     password: string
-    joined_date: Date | string
+    joined_date?: Date | string
     is_Active: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -18109,7 +18112,7 @@ export namespace Prisma {
     last_name: string
     email: string
     password: string
-    joined_date: Date | string
+    joined_date?: Date | string
     is_Active: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -18400,7 +18403,7 @@ export namespace Prisma {
     last_name: string
     email: string
     password: string
-    joined_date: Date | string
+    joined_date?: Date | string
     is_Active: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -18419,7 +18422,7 @@ export namespace Prisma {
     last_name: string
     email: string
     password: string
-    joined_date: Date | string
+    joined_date?: Date | string
     is_Active: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -18560,7 +18563,7 @@ export namespace Prisma {
     last_name: string
     email: string
     password: string
-    joined_date: Date | string
+    joined_date?: Date | string
     is_Active: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -18579,7 +18582,7 @@ export namespace Prisma {
     last_name: string
     email: string
     password: string
-    joined_date: Date | string
+    joined_date?: Date | string
     is_Active: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -18960,7 +18963,7 @@ export namespace Prisma {
     last_name: string
     email: string
     password: string
-    joined_date: Date | string
+    joined_date?: Date | string
     is_Active: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -18979,7 +18982,7 @@ export namespace Prisma {
     last_name: string
     email: string
     password: string
-    joined_date: Date | string
+    joined_date?: Date | string
     is_Active: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -19003,7 +19006,7 @@ export namespace Prisma {
     last_name: string
     email: string
     password: string
-    joined_date: Date | string
+    joined_date?: Date | string
     is_Active: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -19022,7 +19025,7 @@ export namespace Prisma {
     last_name: string
     email: string
     password: string
-    joined_date: Date | string
+    joined_date?: Date | string
     is_Active: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -19328,7 +19331,7 @@ export namespace Prisma {
     last_name: string
     email: string
     password: string
-    joined_date: Date | string
+    joined_date?: Date | string
     is_Active: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -19640,7 +19643,7 @@ export namespace Prisma {
     last_name: string
     email: string
     password: string
-    joined_date: Date | string
+    joined_date?: Date | string
     is_Active: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -19836,7 +19839,7 @@ export namespace Prisma {
     last_name: string
     email: string
     password: string
-    joined_date: Date | string
+    joined_date?: Date | string
     is_Active: boolean
     created_at?: Date | string
     updated_at?: Date | string

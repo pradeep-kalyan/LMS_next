@@ -106,6 +106,14 @@ async function main() {
     }),
     prisma.leave_types.create({
       data: {
+        name: "PERSONAL",
+        description: "Personal leave",
+        max_days_per_request: "7",
+        is_Active: true,
+      },
+    }),
+    prisma.leave_types.create({
+      data: {
         name: "LWP",
         description: "Leave without pay",
         max_days_per_request: "30",
@@ -119,26 +127,10 @@ async function main() {
   const leaveStatuses = await Promise.all([
     prisma.leave_status.create({
       data: {
-        name: "PENDING",
-        description: "Leave request is pending approval",
+        name: "REJECTED",
+        description: "Leave request rejected",
         is_Active: true,
-        id: 6,
-      },
-    }),
-    prisma.leave_status.create({
-      data: {
-        name: "APPROVED_BY_MANAGER",
-        description: "Leave request approved by manager",
-        is_Active: true,
-        id: 4,
-      },
-    }),
-    prisma.leave_status.create({
-      data: {
-        name: "APPROVED_BY_HR",
-        description: "Leave request approved by HR",
-        is_Active: true,
-        id: 3,
+        id: 0,
       },
     }),
     prisma.leave_status.create({
@@ -151,14 +143,6 @@ async function main() {
     }),
     prisma.leave_status.create({
       data: {
-        name: "REJECTED",
-        description: "Leave request rejected",
-        is_Active: true,
-        id: 0,
-      },
-    }),
-    prisma.leave_status.create({
-      data: {
         name: "AUTO_APPROVED",
         description: "Leave request automatically approved",
         is_Active: true,
@@ -167,10 +151,50 @@ async function main() {
     }),
     prisma.leave_status.create({
       data: {
+        name: "APPROVED_BY_MANAGER",
+        description: "Leave request approved by Manager",
+        is_Active: true,
+        id: 3,
+      },
+    }),
+    prisma.leave_status.create({
+      data: {
+        name: "APPROVED_BY_HR",
+        description: "Leave request approved by HR",
+        is_Active: true,
+        id: 4,
+      },
+    }),
+    prisma.leave_status.create({
+      data: {
+        name: "PENDING",
+        description: "Leave request is pending approval",
+        is_Active: true,
+        id: 5,
+      },
+    }),
+    prisma.leave_status.create({
+      data: {
         name: "CANCELLED",
         description: "Leave request Canceled by user",
         is_Active: true,
+        id: 6,
+      },
+    }),
+    prisma.leave_status.create({
+      data: {
+        name: "PENDING_BY_MANAGER",
+        description: "Leave request is pending approval",
+        is_Active: true,
         id: 7,
+      },
+    }),
+    prisma.leave_status.create({
+      data: {
+        name: "PENDING_BY_HR",
+        description: "Leave request is pending approval",
+        is_Active: true,
+        id: 8,
       },
     }),
   ]);
@@ -392,6 +416,18 @@ async function main() {
         max_days_per_request: 10,
         carry_over_limit: 5,
         carry_over_expiry: 365,
+        is_Active: true,
+        effective_from: new Date("2024-01-01"),
+        effective_to: new Date("2024-12-31"),
+      },
+    }),
+    prisma.leave_policy.create({
+      data: {
+        leave_type_id: "ANNUAL",
+        max_days_per_year: 21,
+        max_days_per_request: 15,
+        carry_over_limit: 5,
+        carry_over_expiry: 120,
         is_Active: true,
         effective_from: new Date("2024-01-01"),
         effective_to: new Date("2024-12-31"),
