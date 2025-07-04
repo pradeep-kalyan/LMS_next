@@ -10,10 +10,8 @@ const Page = async () => {
   // Get leaves for users managed by current user
   const leaves = await prisma.leave_request.findMany({
     where: {
-      user: {
-        manager_id: user?.id,
-        // Use cus_id since that's the foreign key
-      },
+      no_of_days: { gt: 5 },
+      status_id: { in: [5, 8] }, // Filter for leaves with status_id 5 or 8
     },
     include: {
       status: true,

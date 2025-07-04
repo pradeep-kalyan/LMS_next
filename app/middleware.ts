@@ -11,20 +11,27 @@ export const middleware = (req: NextRequest) => {
     pathname.startsWith(route)
   );
 
+  // If route is not protected, allow access
   if (!isProtected) return NextResponse.next();
 
+  // If no token exists, redirect to login
   if (!token) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
-  //   try {
-  //     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
-  //       id: string;
-  //       role: string;
-  //     };
-  //   } catch (err) {
-  //     return NextResponse.redirect(new URL("/login", req.url));
-  //   }
+  // Verify the token
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
+      id: string;
+      role: string;
+    };
+
+    // Token is valid, allow access
+    return NextResponse.next();
+  } catch (err) {
+    // Token is invalid or expired, redirect to login
+    return NextResponse.redirect(new URL("/login", req.url));
+  }
 };
 
 export const config = {

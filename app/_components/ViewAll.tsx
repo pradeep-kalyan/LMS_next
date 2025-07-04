@@ -1,5 +1,6 @@
 import prisma from "@/lib/db";
 import { updateLeaveStatus } from "@/app/actions/leaves/handleLeave";
+import { revalidatePath } from "next/cache";
 
 const ViewAll = async ({ leaves, role }) => {
   const statusColors = {
@@ -102,6 +103,7 @@ const ViewAll = async ({ leaves, role }) => {
                         status = 1;
                       }
                       await updateLeaveStatus(leave.cus_id, status);
+                      revalidatePath("/hr/homepage/requests/all");
                     }}
                   >
                     <button
@@ -117,6 +119,7 @@ const ViewAll = async ({ leaves, role }) => {
                     action={async () => {
                       "use server";
                       await updateLeaveStatus(leave.cus_id, 0);
+                      revalidatePath("/hr/homepage/requests/all");
                     }}
                   >
                     <button

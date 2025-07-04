@@ -1,231 +1,231 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+  // This is your Prisma schema file,
+  // learn more about it in the docs: https://pris.ly/d/prisma-schema
+  // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+  // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
-generator client {
-  provider = "prisma-client-js"
-  output   = "../generated/prisma"
-}
+  generator client {
+    provider = "prisma-client-js"
+    output   = "../generated/prisma"
+  }
 
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
+  datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+  }
 
-enum Role {
-  ADMIN
-  HR
-  MANAGER
-  EMPLOYEE
-}
+  enum Role {
+    ADMIN
+    HR
+    MANAGER
+    EMPLOYEE
+  }
 
-enum LEAVE_TYPE {
-  SICK
-  CASUAL
-  PAID
-  ANNUAL
-  MONTHLY
-  PERSONAL
-  MATERNITY
-  PATERNITY
-  BEREAVEMENT
-  CTO
-  LWP
-}
+  enum LEAVE_TYPE {
+    SICK
+    CASUAL
+    PAID
+    ANNUAL
+    MONTHLY
+    PERSONAL
+    MATERNITY
+    PATERNITY
+    BEREAVEMENT
+    CTO
+    LWP
+  }
 
-enum LEAVE_APPROVAL {
-  APPROVED_BY_MANAGER
-  APPROVED
-  APPROVED_BY_HR
-  APPROVED_BY_ADMIN
-  AUTO_APPROVED
-  PENDING
-  REJECTED
-  CANCELLED
-  PENDING_BY_MANAGER
-  PENDING_BY_HR
-  PENDING_BY_ADMIN
-}
+  enum LEAVE_APPROVAL {
+    APPROVED_BY_MANAGER
+    APPROVED
+    APPROVED_BY_HR
+    APPROVED_BY_ADMIN
+    AUTO_APPROVED
+    PENDING
+    REJECTED
+    CANCELLED
+    PENDING_BY_MANAGER
+    PENDING_BY_HR
+    PENDING_BY_ADMIN
+  }
 
-model roles {
-  id          Int      @id
-  name        Role     @default(EMPLOYEE)
-  description String
-  is_Active   Boolean
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
+  model roles {
+    id          Int      @id
+    name        Role     @default(EMPLOYEE)
+    description String
+    is_Active   Boolean
+    created_at  DateTime @default(now())
+    updated_at  DateTime @updatedAt
 
-  // Relations
-  users user[]
-}
+    // Relations
+    users user[]
+  }
 
-model leave_types {
-  id                   String     @id @default(uuid())
-  name                 LEAVE_TYPE @unique @default(CASUAL)
-  description          String
-  max_days_per_request String
-  is_Active            Boolean
-  created_at           DateTime   @default(now())
-  updated_at           DateTime   @updatedAt
+  model leave_types {
+    id                   String     @id @default(uuid())
+    name                 LEAVE_TYPE @unique
+    description          String
+    max_days_per_request String
+    is_Active            Boolean
+    created_at           DateTime   @default(now())
+    updated_at           DateTime   @updatedAt
 
-  // Relations
-  leave_requests leave_request[]
-  leave_policies leave_policy[]
-  leave_balances leave_balance[]
-}
+    // Relations
+    leave_requests leave_request[]
+    leave_policies leave_policy[]
+    leave_balances leave_balance[]
+  }
 
-model leave_status {
-  id          Int            @id
-  name        LEAVE_APPROVAL @unique @default(PENDING)
-  description String
-  is_Active   Boolean
-  created_at  DateTime       @default(now())
-  updated_at  DateTime       @updatedAt
+  model leave_status {
+    id          Int            @id
+    name        LEAVE_APPROVAL @unique @default(PENDING)
+    description String
+    is_Active   Boolean
+    created_at  DateTime       @default(now())
+    updated_at  DateTime       @updatedAt
 
-  // Relations
-  leave_requests          leave_request[]
-  leave_request_histories leave_request_history[]
-}
+    // Relations
+    leave_requests          leave_request[]
+    leave_request_histories leave_request_history[]
+  }
 
-model departments {
-  id          String   @id @default(uuid())
-  cus_id      String   @unique
-  name        String
-  description String
-  is_Active   Boolean
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
+  model departments {
+    id          String   @id @default(uuid())
+    cus_id      String   @unique
+    name        String
+    description String
+    is_Active   Boolean
+    created_at  DateTime @default(now())
+    updated_at  DateTime @updatedAt
 
-  // Relations
-  users        user[]
-  leave_policy leave_policy[]
-  holiday      holiday[]
-}
+    // Relations
+    users        user[]
+    leave_policy leave_policy[]
+    holiday      holiday[]
+  }
 
-model leave_request {
-  id           String   @id @default(uuid())
-  cus_id       String   @unique
-  start_date   DateTime
-  end_date     DateTime
-  no_of_days   Int
-  reason       String
-  applied_date DateTime @default(now())
+  model leave_request {
+    id           String   @id @default(uuid())
+    cus_id       String   @unique
+    start_date   DateTime
+    end_date     DateTime
+    no_of_days   Int
+    reason       String
+    applied_date DateTime @default(now())
 
-  // Foreign Keys
-  user_id       String
-  leave_type_id LEAVE_TYPE
-  status_id     Int
+    // Foreign Keys
+    user_id       String
+    leave_type_id LEAVE_TYPE
+    status_id     Int
 
-  // Relations
-  user                    user                    @relation(fields: [user_id], references: [cus_id])
-  leave_type              leave_types             @relation(fields: [leave_type_id], references: [name])
-  status                  leave_status            @relation(fields: [status_id], references: [id])
-  leave_request_histories leave_request_history[]
-}
+    // Relations
+    user                    user                    @relation(fields: [user_id], references: [cus_id])
+    leave_type              leave_types             @relation(fields: [leave_type_id], references: [name])
+    status                  leave_status            @relation(fields: [status_id], references: [id])
+    leave_request_histories leave_request_history[]
+  }
 
-model leave_request_history {
-  id         String   @id @default(uuid())
-  comments   String
-  created_at DateTime @default(now())
+  model leave_request_history {
+    id         String   @id @default(uuid())
+    comments   String
+    created_at DateTime @default(now())
 
-  // Foreign Keys
-  leave_request_id String
-  status_id        Int
-  updated_by       String
+    // Foreign Keys
+    leave_request_id String
+    status_id        Int
+    updated_by       String
 
-  // Relations
-  leave_request leave_request @relation(fields: [leave_request_id], references: [cus_id])
-  status        leave_status  @relation(fields: [status_id], references: [id])
-  user          user          @relation(fields: [updated_by], references: [id])
-}
+    // Relations
+    leave_request leave_request @relation(fields: [leave_request_id], references: [cus_id])
+    status        leave_status  @relation(fields: [status_id], references: [id])
+    user          user          @relation(fields: [updated_by], references: [id])
+  }
 
-model leave_balance {
-  id               String   @id @default(uuid())
-  yearly           Int
-  totalEntitlement Int
-  year             Int
-  used             Int
-  pending          Int
-  carried_over     Int
-  balance          Int
-  created_at       DateTime @default(now())
-  updated_at       DateTime @updatedAt()
+  model leave_balance {
+    id               String   @id @default(uuid())
+    yearly           Int
+    totalEntitlement Int
+    year             Int
+    used             Int
+    pending          Int
+    carried_over     Int
+    balance          Int
+    created_at       DateTime @default(now())
+    updated_at       DateTime @updatedAt()
 
-  // Foreign Keys
-  user_id       String
-  leave_type_id LEAVE_TYPE
+    // Foreign Keys
+    user_id       String
+    leave_type_id LEAVE_TYPE
 
-  // Relations
-  user       user        @relation(fields: [user_id], references: [cus_id])
-  leave_type leave_types @relation(fields: [leave_type_id], references: [name])
+    // Relations
+    user       user        @relation(fields: [user_id], references: [cus_id])
+    leave_type leave_types @relation(fields: [leave_type_id], references: [name])
 
-  // Composite unique constraint to prevent duplicate balances
-  @@unique([user_id, leave_type_id, year])
-}
+    // Composite unique constraint to prevent duplicate balances
+    @@unique([user_id, leave_type_id, year])
+  }
 
-model leave_policy {
-  id                   String   @id @default(uuid())
-  max_days_per_year    Int
-  max_days_per_request Int
-  carry_over_limit     Int
-  carry_over_expiry    Int
-  is_Active            Boolean
-  effective_from       DateTime
-  effective_to         DateTime
-  created_at           DateTime @default(now())
-  updated_at           DateTime @updatedAt
+  model leave_policy {
+    id                   String   @id @default(uuid())
+    max_days_per_year    Int
+    max_days_per_request Int
+    carry_over_limit     Int
+    carry_over_expiry    Int
+    is_Active            Boolean
+    effective_from       DateTime
+    effective_to         DateTime
+    created_at           DateTime @default(now())
+    updated_at           DateTime @updatedAt
 
-  // Foreign Keys
-  leave_type_id LEAVE_TYPE
-  department_id String?
+    // Foreign Keys
+    leave_type_id LEAVE_TYPE
+    department_id String?
 
-  // Relations
-  leave_type leave_types  @relation(fields: [leave_type_id], references: [name])
-  department departments? @relation(fields: [department_id], references: [cus_id])
-}
+    // Relations
+    leave_type leave_types  @relation(fields: [leave_type_id], references: [name])
+    department departments? @relation(fields: [department_id], references: [cus_id])
+  }
 
-model holiday {
-  id           String   @id @default(uuid())
-  name         String
-  date         DateTime
-  is_Recurring Boolean
-  is_Active    Boolean
-  created_at   DateTime @default(now())
-  updated_at   DateTime @updatedAt
+  model holiday {
+    id           String   @id @default(uuid())
+    name         String
+    date         DateTime
+    is_Recurring Boolean
+    is_Active    Boolean
+    created_at   DateTime @default(now())
+    updated_at   DateTime @updatedAt
 
-  // Foreign Keys (optional - for department-specific holidays)
-  department_id String?
+    // Foreign Keys (optional - for department-specific holidays)
+    department_id String?
 
-  // Relations
-  department departments? @relation(fields: [department_id], references: [cus_id])
-}
+    // Relations
+    department departments? @relation(fields: [department_id], references: [cus_id])
+  }
 
-model user {
-  id          String   @id @default(uuid())
-  cus_id      String   @unique
-  first_name  String
-  last_name   String
-  email       String   @unique
-  password    String
-  joined_date DateTime @default(now())
-  is_Active   Boolean
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt()
+  model user {
+    id          String   @id @default(uuid())
+    cus_id      String   @unique
+    first_name  String
+    last_name   String
+    email       String   @unique
+    password    String
+    joined_date DateTime @default(now())
+    is_Active   Boolean
+    created_at  DateTime @default(now())
+    updated_at  DateTime @updatedAt()
 
-  // Foreign Keys
-  role_id         Int
-  department_name String
-  manager_id      String?
+    // Foreign Keys
+    role_id         Int
+    department_name String
+    manager_id      String?
 
-  // Relations
-  role       roles       @relation(fields: [role_id], references: [id])
-  department departments @relation(fields: [department_name], references: [cus_id])
-  manager    user?       @relation("UserManager", fields: [manager_id], references: [cus_id])
+    // Relations
+    role       roles       @relation(fields: [role_id], references: [id])
+    department departments @relation(fields: [department_name], references: [cus_id])
+    manager    user?       @relation("UserManager", fields: [manager_id], references: [cus_id])
 
-  // Reverse relations
-  subordinates            user[]                  @relation("UserManager")
-  leave_requests          leave_request[]
-  leave_balances          leave_balance[]
-  leave_request_histories leave_request_history[]
-}
+    // Reverse relations
+    subordinates            user[]                  @relation("UserManager")
+    leave_requests          leave_request[]
+    leave_balances          leave_balance[]
+    leave_request_histories leave_request_history[]
+  }

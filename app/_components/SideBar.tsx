@@ -22,11 +22,12 @@ const roleLinks: Record<string, { name: string; path: string }[]> = {
     { name: "Request Leave", path: "/manager/homepage/requests" },
     { name: "View Status", path: "/manager/homepage/status" },
     { name: "All Leave Requests", path: "/manager/homepage/requests/all" },
+    { name: "Team Calendar", path: "/manager/homepage/teamcalendar" },
   ],
   hr: [
     { name: "Home", path: "/hr/homepage" },
     { name: "Request Leave", path: "/hr/homepage/requests" },
-    { name: "View Status", path: "/hr/homepage/status" },
+    { name: "Leave Information", path: "/hr/homepage/view" },
     { name: "All Leave Requests", path: "/hr/homepage/requests/all" },
     { name: "Manage Users", path: "/hr/homepage/users" },
   ],
@@ -34,6 +35,7 @@ const roleLinks: Record<string, { name: string; path: string }[]> = {
     { name: "Home", path: "/employee/homepage" },
     { name: "Request Leave", path: "/employee/homepage/request" },
     { name: "Leave Information", path: "/employee/homepage/view" },
+    { name: "Team Calendar", path: "/employee/homepage/teamcalendar" },
   ],
 };
 

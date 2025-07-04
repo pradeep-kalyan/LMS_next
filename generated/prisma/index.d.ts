@@ -14969,7 +14969,7 @@ export namespace Prisma {
 
   export type leave_typesCreateInput = {
     id?: string
-    name?: $Enums.LEAVE_TYPE
+    name: $Enums.LEAVE_TYPE
     description: string
     max_days_per_request: string
     is_Active: boolean
@@ -14982,7 +14982,7 @@ export namespace Prisma {
 
   export type leave_typesUncheckedCreateInput = {
     id?: string
-    name?: $Enums.LEAVE_TYPE
+    name: $Enums.LEAVE_TYPE
     description: string
     max_days_per_request: string
     is_Active: boolean
@@ -15021,7 +15021,7 @@ export namespace Prisma {
 
   export type leave_typesCreateManyInput = {
     id?: string
-    name?: $Enums.LEAVE_TYPE
+    name: $Enums.LEAVE_TYPE
     description: string
     max_days_per_request: string
     is_Active: boolean
@@ -18131,7 +18131,7 @@ export namespace Prisma {
 
   export type leave_typesCreateWithoutLeave_requestsInput = {
     id?: string
-    name?: $Enums.LEAVE_TYPE
+    name: $Enums.LEAVE_TYPE
     description: string
     max_days_per_request: string
     is_Active: boolean
@@ -18143,7 +18143,7 @@ export namespace Prisma {
 
   export type leave_typesUncheckedCreateWithoutLeave_requestsInput = {
     id?: string
-    name?: $Enums.LEAVE_TYPE
+    name: $Enums.LEAVE_TYPE
     description: string
     max_days_per_request: string
     is_Active: boolean
@@ -18601,7 +18601,7 @@ export namespace Prisma {
 
   export type leave_typesCreateWithoutLeave_balancesInput = {
     id?: string
-    name?: $Enums.LEAVE_TYPE
+    name: $Enums.LEAVE_TYPE
     description: string
     max_days_per_request: string
     is_Active: boolean
@@ -18613,7 +18613,7 @@ export namespace Prisma {
 
   export type leave_typesUncheckedCreateWithoutLeave_balancesInput = {
     id?: string
-    name?: $Enums.LEAVE_TYPE
+    name: $Enums.LEAVE_TYPE
     description: string
     max_days_per_request: string
     is_Active: boolean
@@ -18714,7 +18714,7 @@ export namespace Prisma {
 
   export type leave_typesCreateWithoutLeave_policiesInput = {
     id?: string
-    name?: $Enums.LEAVE_TYPE
+    name: $Enums.LEAVE_TYPE
     description: string
     max_days_per_request: string
     is_Active: boolean
@@ -18726,7 +18726,7 @@ export namespace Prisma {
 
   export type leave_typesUncheckedCreateWithoutLeave_policiesInput = {
     id?: string
-    name?: $Enums.LEAVE_TYPE
+    name: $Enums.LEAVE_TYPE
     description: string
     max_days_per_request: string
     is_Active: boolean

@@ -62,7 +62,7 @@ model roles {
 
 model leave_types {
   id                   String     @id @default(uuid())
-  name                 LEAVE_TYPE @unique @default(CASUAL)
+  name                 LEAVE_TYPE @unique
   description          String
   max_days_per_request String
   is_Active            Boolean

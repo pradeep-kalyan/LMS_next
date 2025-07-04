@@ -120,6 +120,14 @@ async function main() {
         is_Active: true,
       },
     }),
+    prisma.leave_types.create({
+      data: {
+        name: "PAID",
+        description: "Paid leave",
+        max_days_per_request: "10",
+        is_Active: true,
+      },
+    }),
   ]);
 
   // 3. Seed Leave Status

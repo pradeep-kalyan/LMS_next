@@ -108,17 +108,21 @@ const LR_Form = async () => {
                         <form
                           action={async () => {
                             "use server";
+
                             await updateLeaveStatus(leave.cus_id, 6);
                             revalidatePath("/employee/homepage/request");
                           }}
                         >
-                          <button
-                            type="submit"
-                            className="text-red-500 text-sm font-semibold text-center hover:scale-105 cursor-pointer"
-                          >
-                            Cancel
-                          </button>
-                        </form>
+    <button
+      type="submit"
+      className="text-red-500 text-sm font-semibold text-center hover:scale-105 cursor-pointer"
+      disabled={!(leave.status_id === 5 || leave.status_id === 7 || leave.status_id === 8)}
+    >
+      {leave.status_id === 5 || leave.status_id === 7 || leave.status_id === 8
+        ? "Cancel Request"
+        : "Can't Cancel"}
+    </button>
+  </form>
                       </td>
                     </tr>
                   ))}
